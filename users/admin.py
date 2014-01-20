@@ -23,17 +23,15 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('last_login', 'date_joined')
         }),
     )
- 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2')}
+            'fields': ('email', 'name', 'password1', 'password2')}
         ),
     )
- 
     list_display = ('email',)
     list_filter = ('is_active',)
     search_fields = ('name', 'email')
-    ordering = ('email',)
+    ordering = ('name',)
 
 admin.site.register(User, UserAdmin)

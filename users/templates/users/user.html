@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+{{ block.super }}
+    <div id="user-detail">
+        <h4>{{ object.get_full_name }} ({{ object.email }})</h4>
+        <a href="{% url 'users:edit' %}">Edit profile</a>
+    </div>
+{% endblock %}
