@@ -6,16 +6,13 @@ from django.utils.translation import ugettext_lazy as _
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        now = timezone.now()
+        date_joined = extra_fields.pop('date_joined', timezone.now())
         if not email:
             raise ValueError('The given email address must be set')
         email = UserManager.normalize_email(email)
         user = self.model(
             email=email,
-            is_active=True,
-            is_staff=False,
-            is_superuser=False,
-            date_joined=now,
+            date_joined=date_joined,
             **extra_fields
         )
 
@@ -24,12 +21,12 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password, **extra_fields):
-        u = self.create_user(email, password, **extra_fields)
-        u.is_staff = True
-        u.is_active = True
-        u.is_superuser = True
-        u.save(using=self._db)
-        return u
+        extra_fields.update({
+            'is_staff': True,
+            'is_active': True,
+            'is_superuser': True,
+        })
+        return self.create_user(email, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -42,6 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name']
 
     class Meta:
         ordering = ['name']
@@ -50,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def get_full_name(self):
-        return self.email
+        return self.name
 
     def get_short_name(self):
         return self.name
