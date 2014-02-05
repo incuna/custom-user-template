@@ -6,13 +6,11 @@ from django.utils.translation import ugettext_lazy as _
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        date_joined = extra_fields.pop('date_joined', timezone.now())
         if not email:
             raise ValueError('The given email address must be set')
         email = UserManager.normalize_email(email)
         user = self.model(
             email=email,
-            date_joined=date_joined,
             **extra_fields
         )
 
