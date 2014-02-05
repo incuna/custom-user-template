@@ -13,11 +13,15 @@ class UserFormBase(forms.ModelForm):
         'duplicate_email': _('A user with that email address already exists.'),
         'password_mismatch': _("The two password fields didn't match."),
     }
-    password1 = forms.CharField(label=_('Password'),
-        widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_('Password confirmation'),
+    password1 = forms.CharField(
+        label=_('Password'),
         widget=forms.PasswordInput,
-        help_text=_('Enter the same password as above, for verification.'))
+    )
+    password2 = forms.CharField(
+        label=_('Password confirmation'),
+        widget=forms.PasswordInput,
+        help_text=_('Enter the same password as above, for verification.'),
+    )
 
     class Meta:
         model = User
@@ -68,4 +72,3 @@ class UserEditForm(UserFormBase):
         super(UserFormBase, self).__init__(*args, **kwargs)
         self.fields['password2'].required = False
         self.fields['password1'].required = False
-

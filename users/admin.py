@@ -17,18 +17,19 @@ class UserAdmin(BaseUserAdmin):
                 'is_staff',
                 'is_superuser',
                 'groups',
-                'user_permissions')
+                'user_permissions',
+            ),
         }),
         ('Important dates', {
-            'fields': ('last_login', 'date_joined')
+            'fields': ('last_login', 'date_joined'),
         }),
     )
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'name', 'password1', 'password2')}
-        ),
+            'fields': ('email', 'name', 'password1', 'password2'),
+        }),
     )
 
     list_display = ('email',)
