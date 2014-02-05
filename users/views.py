@@ -29,6 +29,7 @@ def class_view_decorator(function_decorator):
 
 class ProfileObjectMixin(object):
     model = User
+
     def get_object(self):
         return self.request.user
 
